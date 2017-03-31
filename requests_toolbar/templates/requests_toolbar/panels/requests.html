@@ -1,0 +1,77 @@
+{% load requests_toolbar_tags %}
+<style type="text/css">
+    .requests-toolbar-hidden {
+        display: none;
+    }
+    .requests-toolbar-warning {
+        background-color: #FFAFA5 !important;
+        color: #fff !important;
+    }
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Status code</th>
+            <th>URL</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in requests %}
+            <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %} {% if request.time > 100 or request.status_code > 299 %}requests-toolbar-warning{% endif %}">
+                <td>{{ request.method }}</td>
+                <td>{{ request.status_code }}</td>
+                <td>{{ request.url }}</td>
+                <td>{{ request.time|floatformat:2 }}ms</td>
+                <td>
+                    <a href="#content-id-{{ forloop.counter }}" class="requests-toolbar-open">Content</a>&nbsp;|&nbsp;
+                    <a href="#stacktrace-id-{{ forloop.counter }}" class="requests-toolbar-open">Stack&nbsp;trace</a>
+                </td>
+            </tr>
+            <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="stacktrace-id-{{ forloop.counter }}">
+                <td colspan="4">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Function</th>
+                                <th>Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for line in request.stacktrace %}
+                            <tr>
+                                <td class="file">{{ line.filename|embolden_file }}:{{ line.lineno }}</td>
+                                <td class="function">{{ line.function }}</td>
+                                <td class="code">{{ line.code_context|highlight:"python"|safe }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="content-id-{{ forloop.counter }}">
+                <td colspan="4">
+                    <pre class="requests-toolbar-collapse">
+                        {% if request.is_json %}
+                            {{ request.content|highlight:"json"|safe }}
+                        {% else %}
+                            {{ request.content|highlight:"html"|safe }}
+                        {% endif %}
+                    </pre>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    (function() {
+        $('.requests-toolbar-open').click(function(e) {
+            var element = $(e.target);
+            console.log($(element.attr('href')), element.attr('href'), element);
+            $(element.attr('href')).toggle();
+        })
+    })();
+</script>
