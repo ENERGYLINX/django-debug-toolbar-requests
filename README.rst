@@ -3,8 +3,15 @@ django-debug-toolbar-requests
 Adds requests debuging information
 
 
+Install
+-------
+::
+
+    pip install -e git+git@github.com:ENERGYLINX/django-debug-toolbar-requests.git
+
+
 Setup
-=====
+-----
 Add the following lines to your ``settings.py``::
 
    INSTALLED_APPS = (
