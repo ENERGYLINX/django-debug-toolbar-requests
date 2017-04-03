@@ -46,13 +46,7 @@
             </tr>
             <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="content-id-{{ forloop.counter }}">
                 <td colspan="4">
-                    <pre class="requests-toolbar-collapse">
-                        {% if request.is_json %}
-                            {{ request.content|highlight:"json"|safe }}
-                        {% else %}
-                            {{ request.content|highlight:"html"|safe }}
-                        {% endif %}
-                    </pre>
+                    <pre class="requests-toolbar-collapse">{% if request.is_json %}{{ request.content|highlight:"json"|safe }}{% else %}{{ request.content|highlight:"html"|safe }}{% endif %}</pre>
                 </td>
             </tr>
         {% endfor %}
