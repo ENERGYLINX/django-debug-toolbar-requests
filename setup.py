@@ -2,9 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-debug-toolbar-requests',
-    version='1',
-    # version=':versiontools:requests_toolbar:',
-    # packages=['requests_toolbar', 'requests_toolbar.templatetags'],
+    version='1.0',
     packages=find_packages(),
     url='https://github.com/ENERGYLINX/django-debug-toolbar-requests',
     license='',
@@ -14,9 +12,6 @@ setup(
     long_description=open('README.rst').read(),
     include_package_data=True,
     zip_safe=False,
-    setup_requires=[
-        # 'versiontools >= 1.6',
-    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
