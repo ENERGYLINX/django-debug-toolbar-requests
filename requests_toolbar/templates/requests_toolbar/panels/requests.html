@@ -7,6 +7,8 @@
         background-color: #FFAFA5 !important;
         color: #fff !important;
     }
+    ul.traceback li { list-style: none; !important;}
+    ul.traceback li span { display: inline !important; }
 </style>
 <table>
     <thead>
@@ -32,24 +34,14 @@
             </tr>
             <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="stacktrace-id-{{ forloop.counter }}">
                 <td colspan="4">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>File</th>
-                                <th>Function</th>
-                                <th>Code</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for line in request.stacktrace %}
-                            <tr>
-                                <td class="file">{{ line.filename|embolden_file }}:{{ line.lineno }}</td>
-                                <td class="function">{{ line.function }}</td>
-                                <td class="code">{{ line.code_context|highlight:"python"|safe }}</td>
-                            </tr>
+                    <ul class="traceback">
+                        {% for frame in request.stacktrace %}
+                        <li>
+                            File "{{ frame.filename|embolden_file|escape }}{% if not frame.code_context %}:{{ frame.lineno }}{% endif %}" in {{ frame.function|escape }}
+                            {% if frame.code_context %}<pre>{{ frame.lineno }}. {{ frame.code_context|highlight:"python"|safe }}</pre>{% endif %}
+                        </li>
                         {% endfor %}
-                        </tbody>
-                    </table>
+                    </ul>
                 </td>
             </tr>
             <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="content-id-{{ forloop.counter }}">
