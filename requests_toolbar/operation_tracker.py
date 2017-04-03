@@ -19,7 +19,7 @@ results = []
 
 def _get_stacktrace():
     try:
-        return inspect.stack()
+        return inspect.stack()[2:]
     except IndexError:
         return [(
             "",
