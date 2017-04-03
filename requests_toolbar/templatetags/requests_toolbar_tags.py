@@ -35,6 +35,10 @@ def format_dict(value, width=60):
 
 @register.filter
 def highlight(value, language):
+
+    if isinstance(value, list):
+        value = '\n'.join(value)
+
     try:
         from pygments import highlight
         from pygments.lexers import get_lexer_by_name
@@ -42,8 +46,6 @@ def highlight(value, language):
     except ImportError:
         return value
 
-    if isinstance(value, list):
-        value = '\n'.join(value)
     # Can't use class-based colouring because the debug toolbar's css rules
     # are more specific so take precedence
     formatter = HtmlFormatter(style='friendly', nowrap=True, noclasses=True)
