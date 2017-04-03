@@ -7,7 +7,7 @@ Install
 -------
 ::
 
-    pip install -e git+git@github.com:ENERGYLINX/django-debug-toolbar-requests.git
+    pip install -e git+git@github.com:ENERGYLINX/django-debug-toolbar-requests.git#egg=django-debug-toolbar-requests
 
 
 Setup
