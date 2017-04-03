@@ -59,11 +59,10 @@
     </tbody>
 </table>
 <script>
-    (function() {
+    (function ($, publicAPI) {
         $('.requests-toolbar-open').click(function(e) {
             var element = $(e.target);
-            console.log($(element.attr('href')), element.attr('href'), element);
             $(element.attr('href')).toggle();
         })
-    })();
+    })(djdt.jQuery, djdt);
 </script>
