@@ -32,6 +32,11 @@
                     <a href="#stacktrace-id-{{ forloop.counter }}" class="requests-toolbar-open">Stack&nbsp;trace</a>
                 </td>
             </tr>
+            <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="content-id-{{ forloop.counter }}">
+                <td colspan="4">
+                    <pre class="requests-toolbar-collapse">{% if request.is_json %}{{ request.content|highlight:"json"|safe }}{% else %}{{ request.content|highlight:"html"|safe }}{% endif %}</pre>
+                </td>
+            </tr>
             <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="stacktrace-id-{{ forloop.counter }}">
                 <td colspan="4">
                     <ul class="traceback">
@@ -42,11 +47,6 @@
                         </li>
                         {% endfor %}
                     </ul>
-                </td>
-            </tr>
-            <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="content-id-{{ forloop.counter }}">
-                <td colspan="4">
-                    <pre class="requests-toolbar-collapse">{% if request.is_json %}{{ request.content|highlight:"json"|safe }}{% else %}{{ request.content|highlight:"html"|safe }}{% endif %}</pre>
                 </td>
             </tr>
         {% endfor %}
