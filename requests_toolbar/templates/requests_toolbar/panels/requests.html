@@ -34,10 +34,16 @@
             </tr>
             <tr class="requests-toolbar-hidden {% cycle 'djDebugOdd' 'djDebugEven' %}" id="content-id-{{ forloop.counter }}">
                 <td colspan="4">
+                    {% if request.kwargs.headers %}
+                    <h4>Request Headers</h4>
+                    <pre class="requests-toolbar-collapse">{{ request.kwargs.headers|highlight:"python"|safe }}</pre>
+                    {% endif %}
+
                     {% if request.kwargs.data %}
                     <h4>Request Data</h4>
                     <pre class="requests-toolbar-collapse">{% if request.kwargs.json %}{{ request.kwargs.data|highlight:"json"|safe }}{% else %}{{ request.kwargs.data|highlight:"python"|safe }}{% endif %}</pre>
                     {% endif %}
+
                     <h4>Response</h4>
                     <pre class="requests-toolbar-collapse">{% if request.is_json %}{{ request.content|highlight:"json"|safe }}{% else %}{{ request.content|highlight:"html"|safe }}{% endif %}</pre>
                 </td>
