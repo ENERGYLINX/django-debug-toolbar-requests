@@ -36,8 +36,8 @@ def format_dict(value, width=60):
 @register.filter
 def highlight(value, language):
 
-    if isinstance(value, list):
-        value = '\n'.join(value)
+    if isinstance(value, (dict, list)):
+        value = pprint.pformat(value, width=60)
 
     try:
         from pygments import highlight
