@@ -4,7 +4,7 @@ import shlex
 from setuptools import find_packages, setup
 
 
-version = '1.0.3'
+version = '1.0.4'
 
 # release a version, publish to GitHub and PyPI
 if sys.argv[-1] == 'publish':
