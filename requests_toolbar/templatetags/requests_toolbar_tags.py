@@ -32,9 +32,22 @@ def embolden_file(path):
 def format_dict(value, width=60):
     return pprint.pformat(value, width=int(width))
 
-
 @register.filter
-def highlight(value, language):
+def render_stack_trace(value):
+    def _render_stack(stack_line):
+        return do_highlight(stack_line, 'python')
+
+    result = []
+
+    if isinstance(value, list):
+        for line in value:
+            result.append(_render_stack(line))
+    else:
+        result.append(_render_stack(value))
+
+    return mark_safe(''.join(result))
+
+def do_highlight(value, language):
 
     if isinstance(value, (dict, list)):
         value = pprint.pformat(value, width=60)
@@ -50,3 +63,7 @@ def highlight(value, language):
     # are more specific so take precedence
     formatter = HtmlFormatter(style='friendly', nowrap=True, noclasses=True)
     return highlight(value, get_lexer_by_name(language), formatter)
+
+@register.filter
+def highlight(value, language):
+    return do_highlight(value, language)

@@ -25,9 +25,10 @@ setup(
     author='Martin Voldrich',
     author_email='rbas.cz@gmail.com',
     description='Adds requests debuging information',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     include_package_data=True,
     zip_safe=False,
+    install_requires=['requests'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

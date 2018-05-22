@@ -22,7 +22,7 @@
     </thead>
     <tbody>
         {% for request in requests %}
-            <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %} {% if request.time > 100 or request.status_code > 299 %}requests-toolbar-warning{% endif %}">
+            <tr class="{% cycle 'djDebugOdd' 'djDebugEven' %} {% if request.time > 1000 or request.status_code > 299 %}requests-toolbar-warning{% endif %}">
                 <td>{{ request.method }}</td>
                 <td>{{ request.status_code }}</td>
                 <td>{{ request.url }}</td>
@@ -54,7 +54,7 @@
                         {% for frame in request.stacktrace %}
                         <li>
                             File "{{ frame.filename|embolden_file|escape }}{% if not frame.code_context %}:{{ frame.lineno }}{% endif %}" in {{ frame.function|escape }}
-                            {% if frame.code_context %}<pre>{{ frame.lineno }}. {{ frame.code_context|highlight:"python"|safe }}</pre>{% endif %}
+                            {% if frame.code_context %}<pre>{{ frame.lineno }}. {{ frame.code_context|render_stack_trace }}</pre>{% endif %}
                         </li>
                         {% endfor %}
                     </ul>
